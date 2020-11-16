@@ -1,17 +1,20 @@
-﻿@{
-    ViewBag.Title = "Strona gówna";
+﻿@model DonationHubWeb.ViewModel.Home.IndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
 }
+
 <body>
     <section id="stats" class="stats">
         <div class="container container--85">
             <div class="stats--item">
-                <em>10</em>
+                <em>@Model.NumberOfAllDonations</em>
                 <h3>Oddanych worków</h3>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius est beatae, quod accusamus illum tempora!</p>
             </div>
 
             <div class="stats--item">
-                <em>5</em>
+                <em>@Model.NumberOfSupportedInstitutions</em>
                 <h3>Wspartych organizacji</h3>
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam magnam, sint nihil cupiditate quas quam.</p>
             </div>
@@ -69,34 +72,30 @@
 
             <ul class="help--slides-items">
                 <li>
+                    @{
+                    int even = 0;
+                    foreach(KeyValuePair<string, string> kvp in Model.InstitutionsData)
+                    {
+                    if (even%2 != 0)
+                    {
                     <div class="col">
-                        <div class="title">Fundacja "Dbam o Zdrowie"</div>
-                        <div class="subtitle">Cel i misja: Pomoc dzieciom z ubogich rodzin.</div>
+                        <div class="title">@kvp.Key</div>
+                        <div class="subtitle">@kvp.Value</div>
                     </div>
-
+                    even = even +1;
+                    }
+                    if (even%2 == 0)
+                    {
                     <div class="col">
-                        <div class="title">Fundacja "A kogo"</div>
-                        <div class="subtitle">Cel i misja: Pomoc wybudzaniu dzieci ze śpiączki.</div>
+                        <div class="title">@kvp.Key</div>
+                        <div class="subtitle">@kvp.Value</div>
                     </div>
+                    }
+                    }
+                    }
                 </li>
-
-                <li>
-                    <div class="col">
-                        <div class="title">Fundacja “Dla dzieci"</div>
-                        <div class="subtitle">Cel i misja: Pomoc osobom znajdującym się w trudnej sytuacji życiowej.</div>
-                    </div>
-                    <div class="col">
-                        <div class="title">Fundacja “Bez domu”</div>
-                        <div class="subtitle">Cel i misja: Pomoc dla osób nie posiadających miejsca zamieszkania</div>
-                    </div>
-
-                </li>
-
-            </ul>
-
-
+                </ul>
         </div>
-
     </section>
 
     <environment include="Development">

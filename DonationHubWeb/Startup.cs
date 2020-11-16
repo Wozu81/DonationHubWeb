@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DonationHubWeb.Context;
+using DonationHubWeb.Services;
+using DonationHubWeb.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -33,7 +30,9 @@ namespace DonationHubWeb
                 builder.UseSqlServer(config);
             });
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<DonationHubWebContext>();
-
+            services.AddScoped<IDonationService, DonationService>();
+            services.AddScoped<IInstitutionService, InstitutionService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddControllersWithViews();
         }
 

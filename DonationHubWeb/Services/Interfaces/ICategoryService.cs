@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DonationHubWeb.Services.Interfaces
+﻿namespace DonationHubWeb.Services.Interfaces
 {
-    interface ICategoryService
+    public interface ICategoryService
     {
     }
 }

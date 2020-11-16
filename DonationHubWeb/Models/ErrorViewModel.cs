@@ -1,5 +1,3 @@
-using System;
-
 namespace DonationHubWeb.Models
 {
     public class ErrorViewModel

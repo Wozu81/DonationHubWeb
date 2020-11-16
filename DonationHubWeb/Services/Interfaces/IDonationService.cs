@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace DonationHubWeb.Services.Interfaces
 {
-    interface IDonationService
+    public interface IDonationService
     {
+        int GetNumberOfAllDonations();
+        int GetNumberOfSupportedInstitutions();
     }
 }
