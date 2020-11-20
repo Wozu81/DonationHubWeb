@@ -33,7 +33,7 @@ namespace DonationHubWeb
             services.AddScoped<IDonationService, DonationService>();
             services.AddScoped<IInstitutionService, InstitutionService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddControllersWithViews();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

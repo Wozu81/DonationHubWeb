@@ -10,11 +10,13 @@ namespace DonationHubWeb.Controllers
 	{
 		private readonly IDonationService _donationService;
 		private readonly IInstitutionService _institutionService;
+
 		public HomeController(IDonationService donationService, IInstitutionService institutionService)
 		{
 			_donationService = donationService;
 			_institutionService = institutionService;
 		}
+
 		public IActionResult Index()
 		{
 			IndexViewModel indexViewModel = new IndexViewModel()

@@ -16,11 +16,13 @@ namespace DonationHubWeb.Controllers
         {
             return View();
         }
+
         [HttpGet]
         public IActionResult Donate()
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult Donate(DonateViewModel donateViewModel)
         {
@@ -28,7 +30,11 @@ namespace DonationHubWeb.Controllers
             {
                 try
                 {
-                    return default;
+                    var model = new DonateViewModel()
+                    {
+                        Categories = _donationService.GetAllCategories()
+                    };
+                    return View(model);
                 }
                 catch
                 {

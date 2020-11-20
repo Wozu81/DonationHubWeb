@@ -1,5 +1,6 @@
 ﻿using DonationHubWeb.Context;
 using DonationHubWeb.Services.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DonationHubWeb.Services
@@ -11,6 +12,12 @@ namespace DonationHubWeb.Services
         public DonationService(DonationHubWebContext context)
         {
             _context = context;
+        }
+
+        public IList<string> GetAllCategories()
+        {
+            var a = _context.Categories.Select(n => n.Name).ToList();
+            return a;
         }
 
         public int GetNumberOfAllDonations()

@@ -17,7 +17,6 @@ namespace DonationHubWeb.Services
         public Dictionary<string, string> GetInstitutionsData()
         {
             Dictionary<string, string> InstitutionsData = new Dictionary<string, string>();
-            //var a  = _context.Institutions.Select(t => new { t.Name, t.Description }).ToDictionary(t => t.Name, t => t);
             InstitutionsData = _context.Institutions.Select(t => new { t.Name, t.Description }).ToDictionary(t => t.Name, t => t.Description );
             return InstitutionsData;
         }
