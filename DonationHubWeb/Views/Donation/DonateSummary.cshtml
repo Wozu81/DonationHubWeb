@@ -1,0 +1,75 @@
+﻿@model DonationHubWeb.ViewModel.Donation.DonateSummaryViewModel
+@{
+    ViewData["Title"] = "DonateSummary";
+}
+<section class="form--steps" id="Summary">
+    <div class="form--steps-container">
+        <form asp-action="DonateSummary" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!-- STEP 6 -->
+            <div data-step="5" class="active">
+                <h3>Podsumowanie Twojej darowizny</h3>
+
+                <div class="summary">
+                    <div class="form-section">
+                        <h4>Oddajesz:</h4>
+                        <ul>
+                            <li>
+                                <span class="icon icon-bag"></span>
+                                @if (Model.Quantity == 1)
+                                {
+                                    <span class="summary--text">@Model.Quantity worek ubrań w dobrym stanie dla dzieci</span>
+                                }
+                                @if (Model.Quantity == 2 || Model.Quantity == 3 || Model.Quantity == 4)
+                                {
+                                    <span class="summary--text">@Model.Quantity worki ubrań w dobrym stanie dla dzieci</span>
+                                }
+                                else
+                                {
+                                    <span class="summary--text">@Model.Quantity worków ubrań w dobrym stanie dla dzieci</span>
+                                }
+                            </li>
+
+                            <li>
+                                <span class="icon icon-hand"></span>
+                                <span class="summary--text">Dla fundacji @Model.Institution.Name</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="form-section form-section--columns">
+                        <div class="form-section--column">
+                            <h4>Adres odbioru:</h4>
+                            <ul>
+                                <li>@Model.Street.ToString()</li>
+                                <li>@Model.City.ToString()</li>
+                                <li>@Model.ZipCode.ToString()</li>
+                                <li>@Model.Phone.ToString()</li>
+                            </ul>
+                        </div>
+
+                        <div class="form-section--column">
+                            <h4>Termin odbioru:</h4>
+                            <ul>
+                                <li>@Model.PickUpDate.ToShortDateString()</li>
+                                <li>@Model.PickUpTime.ToShortTimeString()</li>
+                                @if (Model.PickUpComment == null)
+                                {
+                                    <li>Brak Uwag</li>
+                                }
+                                else
+                                {
+                                    <li>@Model.PickUpComment.ToString()</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form-group--buttons">
+                    <button type="button" class="btn prev-step">Wstecz</button>
+                    <button type="submit" class="btn">Potwierdzam</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

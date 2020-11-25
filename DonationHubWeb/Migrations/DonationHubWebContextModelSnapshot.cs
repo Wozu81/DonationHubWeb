@@ -49,17 +49,20 @@ namespace DonationHubWeb.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<int?>("InstitutionId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PickUpComment")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("PickUpDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PickUpTime")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("PickUpTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");

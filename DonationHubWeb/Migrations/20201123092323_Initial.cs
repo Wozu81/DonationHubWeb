@@ -177,9 +177,10 @@ namespace DonationHubWeb.Migrations
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PickUpDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PickUpTime = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    PickUpTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PickUpComment = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace DonationHubWeb
 {
@@ -33,6 +34,16 @@ namespace DonationHubWeb
             services.AddScoped<IDonationService, DonationService>();
             services.AddScoped<IInstitutionService, InstitutionService>();
             services.AddScoped<ICategoryService, CategoryService>();
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(90);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddMvc();
         }
 
@@ -57,6 +68,8 @@ namespace DonationHubWeb
             app.UseAuthorization();
 
             app.UseAuthentication();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
