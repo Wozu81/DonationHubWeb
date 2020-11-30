@@ -2,6 +2,68 @@
 @{
     ViewData["Title"] = "DonateSummary";
 }
+@section HeaderDonate
+{
+    <header class="header--form-page">
+        <nav class="container container--70">
+            <ul class="nav--actions">
+                @if (User.Identity.IsAuthenticated == true)
+                {
+                    <li class="logged-user">
+                        Witaj @User.Claims.Where(x => x.Type == "FirstName").Select(x => x.Value).FirstOrDefault()
+                        <ul class="dropdown">
+                            <li><a asp-controller="Account" asp-action="Profile">Profil</a></li>
+                            <li><a asp-controller="Account" asp-action="Settings">Ustawienia</a></li>
+                            <li><a asp-controller="Account" asp-action="MyDonations">Moje zbiórki</a></li>
+                            <li><a asp-controller="Account" asp-action="Logout">Wyloguj</a></li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li><a asp-controller="Account" asp-action="Login" class="btn btn--small btn--without-border">Zaloguj</a></li>
+                    <li><a asp-controller="Account" asp-action="Register" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+                }
+            </ul>
+
+            <ul>
+                <li><a asp-controller="Home" asp-action="Index" class="btn btn--without-border active">Start</a></li>
+                <li><a asp-controller="Home" asp-action="Index" asp-fragment="steps" class="btn btn--without-border">O co chodzi?</a></li>
+                <li><a asp-controller="Home" asp-action="Index" asp-fragment="about-us" class="btn btn--without-border">O nas</a></li>
+                <li><a asp-controller="Home" asp-action="Index" asp-fragment="help" class="btn btn--without-border">Fundacje i organizacje</a></li>
+                <li><a asp-controller="Home" asp-action="Index" asp-fragment="contact" class="btn btn--without-border">Kontakt</a></li>
+            </ul>
+        </nav>
+
+        <div class="slogan container container--90">
+            <div class="slogan--item">
+                <h1>
+                    Oddaj rzeczy, których już nie chcesz<br />
+                    <span class="uppercase">potrzebującym</span>
+                </h1>
+
+                <div class="slogan--steps">
+                    <div class="slogan--steps-title">Wystarczą 4 proste kroki:</div>
+                    <ul class="slogan--steps-boxes">
+                        <li>
+                            <div><em>1</em><span>Wybierz rzeczy</span></div>
+                        </li>
+                        <li>
+                            <div><em>2</em><span>Spakuj je w worki</span></div>
+                        </li>
+                        <li>
+                            <div><em>3</em><span>Wybierz fundację</span></div>
+                        </li>
+                        <li>
+                            <div><em>4</em><span>Zamów kuriera</span></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+}
+
 <section class="form--steps" id="Summary">
     <div class="form--steps-container">
         <form asp-action="DonateSummary" method="post">

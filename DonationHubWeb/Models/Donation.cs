@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DonationHubWeb.Models
 {
@@ -8,7 +9,9 @@ namespace DonationHubWeb.Models
         public int Id { get; set; }
         public int Quantity { get; set; }
         public List<Category> Categories { get; set; }
+        [ForeignKey("InstitutionId")]
         public Institution Institution { get; set; }
+        public int InstitutionId { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
         public string ZipCode { get; set; }
