@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace DonationHubWeb.ViewModel.Donation
+﻿namespace DonationHubWeb.ViewModel.Donation
 {
     public class CategoriesCheckboxModel
     {

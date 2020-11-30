@@ -22,7 +22,7 @@ namespace DonationHubWeb.Controllers
 			IndexViewModel indexViewModel = new IndexViewModel()
 			{
 				NumberOfAllDonations = _donationService.GetNumberOfAllDonations(),
-				NumberOfSupportedInstitutions = _donationService.GetNumberOfSupportedInstitutions(),
+				NumberOfSupportedInstitutions = _institutionService.GetNumberOfSupportedInstitutions(),
 				InstitutionsData = _institutionService.GetInstitutionsData()
 			};
 			return View(indexViewModel);

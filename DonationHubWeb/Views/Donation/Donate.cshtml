@@ -9,15 +9,23 @@
     <header class="header--form-page">
         <nav class="container container--70">
             <ul class="nav--actions">
-                <li class="logged-user">
-                    Witaj Agata
-                    <ul class="dropdown">
-                        <li><a href="#">Profil</a></li>
-                        <li><a href="#">Ustawienia</a></li>
-                        <li><a href="#">Moje zbiórki</a></li>
-                        <li><a href="#">Wyloguj</a></li>
-                    </ul>
-                </li>
+                @if (User.Identity.IsAuthenticated == true)
+                {
+                    <li class="logged-user">
+                        Witaj @User.Claims.Where(x => x.Type == "FirstName").Select(x => x.Value).FirstOrDefault()
+                        <ul class="dropdown">
+                            <li><a asp-controller="Account" asp-action="Profile">Profil</a></li>
+                            <li><a asp-controller="Account" asp-action="Settings">Ustawienia</a></li>
+                            <li><a asp-controller="Account" asp-action="MyDonations">Moje zbiórki</a></li>
+                            <li><a asp-controller="Account" asp-action="Logout">Wyloguj</a></li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li><a asp-controller="Account" asp-action="Login" class="btn btn--small btn--without-border">Zaloguj</a></li>
+                    <li><a asp-controller="Account" asp-action="Register" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+                }
             </ul>
 
             <ul>

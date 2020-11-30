@@ -11,9 +11,13 @@ namespace DonationHubWeb.Controllers
     public class DonationController : Controller
     {
         private readonly IDonationService _donationService;
-        public DonationController(IDonationService donationService)
+        private readonly ICategoryService _categoryService;
+        private readonly IInstitutionService _institutionService;
+        public DonationController(IDonationService donationService, ICategoryService categoryService, IInstitutionService institutionService)
         {
             _donationService = donationService;
+            _categoryService = categoryService;
+            _institutionService = institutionService;
         }
 
         public IActionResult Index()
@@ -24,9 +28,9 @@ namespace DonationHubWeb.Controllers
         [HttpGet]
         public IActionResult Donate()
         {
-            var tempCategories = _donationService.GetAllCategories();   //benchmarkowe zmienne, by sprawdzić czy listy po drodze się nie zepsuły
+            var tempCategories = _categoryService.GetAllCategories();   //benchmarkowe zmienne, by sprawdzić czy listy po drodze się nie zepsuły
                                                                         //- tutaj przypisuję listę kategorii pobraną z bazy danych w klasie List<Category>
-            var tempCategoriesForCheckBox = _donationService.ConvertCategoriesToCategoriesForCheckBox(tempCategories);  //ponieważ po odebraniu informacji z checkboxów muszę mieć informację,
+            var tempCategoriesForCheckBox = _categoryService.ConvertCategoriesToCategoriesForCheckBox(tempCategories);  //ponieważ po odebraniu informacji z checkboxów muszę mieć informację,
                                                                                                                         //która kategoria została zaznaczona, więc wprowadzam nową klasę 'CategoriesCheckboxModel',
                                                                                                                         //ma te same właściwości co Category, do tego właściwość boolowską 'IsChecked' przechowującą
                                                                                                                         //informację czy checkbox przy danej kategorii został zaznaczony.
@@ -39,7 +43,7 @@ namespace DonationHubWeb.Controllers
                 Categories = tempCategories,                            // W tej chwili nadmiarową właściwością jest wymagany przez projekt 'Categories'
                                                                         //'Categories' miałby być użyty w pętli foreach do generowania checkboxów. 
                 CategoriesForCheckBox = tempCategoriesForCheckBox,      //Po testach używam 'CategoriesForCheckBox' w pętli for - w Donate.cshtml
-                Institutions = _donationService.GetAllInstitutions()    //Institutions - wymagany jako opis przy radiobuttonach przy wyborze fundacji
+                Institutions = _institutionService.GetAllInstitutions()    //Institutions - wymagany jako opis przy radiobuttonach przy wyborze fundacji
             };
             return View(model);
         }
@@ -52,14 +56,14 @@ namespace DonationHubWeb.Controllers
                 try
                 {
                     var a = donateViewModel.CategoriesForCheckBox;      //zmienna w której sprawdzałem co znajduje się w pobranych kategoriach, w tym miejscu sprawdzałem, że foreach daje pustą listę
-                    var b = _donationService.ConvertCategoriesForCheckBoxToCategories(donateViewModel.CategoriesForCheckBox);   //pomocnicza zmienna do procesu zamiany List<CategoriesCheckboxModel> na List<Category>
+                    var b = _categoryService.ConvertCategoriesForCheckBoxToCategories(donateViewModel.CategoriesForCheckBox);   //pomocnicza zmienna do procesu zamiany List<CategoriesCheckboxModel> na List<Category>
                                                                                                                                 //w wyniku tej funkcji do List<Category> wpadają tylko zaznaczone w formularzu instytucje
                     var model = new Donation()                                                                                  //przygotowanie modelu bez ID rzecz jasna - to mogłoby być już teoretycznie zapisane
                                                                                                                                 //w bazie danych, ale po drodze jeszcze czeka wyświetlenie podsumowania i akceptacja
                     {
-                        Categories = _donationService.ConvertCategoriesForCheckBoxToCategories(donateViewModel.CategoriesForCheckBox),
+                        Categories = _categoryService.ConvertCategoriesForCheckBoxToCategories(donateViewModel.CategoriesForCheckBox),
                         Quantity = donateViewModel.Quantity,
-                        Institution = _donationService.GetInstitutionByID(donateViewModel.SelectedInstitution),
+                        Institution = _institutionService.GetInstitutionByID(donateViewModel.SelectedInstitution),
                         Street = donateViewModel.Street,
                         City = donateViewModel.City,
                         ZipCode = donateViewModel.ZipCode,
@@ -115,7 +119,8 @@ namespace DonationHubWeb.Controllers
                     {
                         Categories = donateSummaryView.Categories,
                         Quantity = donateSummaryView.Quantity,
-                        Institution = donateSummaryView.Institution,
+                        //Institution = donateSummaryView.Institution,
+                        InstitutionId = donateSummaryView.Institution.Id,
                         Street = donateSummaryView.Street,
                         City = donateSummaryView.City,
                         ZipCode = donateSummaryView.ZipCode,
@@ -124,6 +129,11 @@ namespace DonationHubWeb.Controllers
                         PickUpTime = donateSummaryView.PickUpTime,
                         PickUpComment = donateSummaryView.PickUpComment
                     };
+                    //model.Institution.Id = 0;
+                    //foreach (var category in model.Categories)
+                    //{
+                    //    category.Id = 0;
+                    //}
                     _donationService.Create(model);                         
                     HttpContext.Session.Remove("ForDonationSummary");       //Wyrzucenie Sesji, jeśli zapis skończy się sukcesem i jeśli nie nastąpił timeout rzecz jasna
                     return RedirectToAction(nameof(DonateConfirmation));
